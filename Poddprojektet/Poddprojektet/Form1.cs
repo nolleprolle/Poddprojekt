@@ -18,7 +18,6 @@ namespace Poddprojektet
         {
             InitializeComponent();
 
-            // Lägg till den här raden:
             this.Load += new System.EventHandler(this.Form1_Load);
 
             _mongoService = new MongoDBService();
