@@ -15,9 +15,9 @@ namespace DataLayer
 {
     public class RssPoddClient
     {
-        private HttpClient aHttpClient;
+        private readonly HttpClient aHttpClient; //readonly då vi inte vill ha några oavsikliga ändringar (Vi tar ju in parametrar)
 
-        public RssPoddClient()
+        public RssPoddClient(HttpClient aHttpClient)
         {
             this.aHttpClient = aHttpClient;
         }

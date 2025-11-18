@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModelsLayer
+namespace DataLayer.IRepositories
 {
     /// Generiskt repository-interface för grundläggande CRUD-operationer.
     /// Används av alla repositories (Podd, Episode, Category).
