@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,5 +13,7 @@ namespace ModelsLayer
         public string? Title { get; set; }
         public string? Description { get; set; } 
         public DateTime? AirDate { get; set; }
+        public string? Link { get; set; }
+        public string? PoddReference { get; set; }
     }
 }
