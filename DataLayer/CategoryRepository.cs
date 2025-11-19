@@ -1,10 +1,7 @@
 ﻿using DataLayer.IRepositories;
 using ModelsLayer;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataLayer
@@ -13,36 +10,31 @@ namespace DataLayer
     {
         private readonly IMongoCollection<Category> _categoryCollection;
 
-        /// <summary>
-        /// Konstruktorn tar emot MongoDBService och hämtar rätt collection.
-        /// </summary>
         public CategoryRepository(MongoDBService mongoService)
         {
             _categoryCollection = mongoService.GetCollection<Category>("Categories");
         }
 
-        // READ ALL (R i CRUD) – hämtar alla kategorier.
+        // READ ALL
         public async Task<List<Category>> GetAllAsync()
         {
-            FilterDefinition<Category> filter = Builders<Category>.Filter.Empty;
-            IAsyncCursor<Category> cursor = await _categoryCollection.FindAsync(filter);
-            List<Category> categories = await cursor.ToListAsync();
-            return categories;
+            var filter = Builders<Category>.Filter.Empty;
+            var cursor = await _categoryCollection.FindAsync(filter);
+            return await cursor.ToListAsync();
         }
 
-        // READ ONE (R i CRUD) – hämtar en kategori baserat på Id.
+        // READ ONE
         public async Task<Category?> GetByIdAsync(string id)
         {
-            FilterDefinition<Category> filter = Builders<Category>.Filter.Eq(c => c.Id, id);
-            IAsyncCursor<Category> cursor = await _categoryCollection.FindAsync(filter);
-            Category category = await cursor.FirstOrDefaultAsync();
-            return category;
+            var filter = Builders<Category>.Filter.Eq(c => c.Id, id);
+            var cursor = await _categoryCollection.FindAsync(filter);
+            return await cursor.FirstOrDefaultAsync();
         }
 
-        // CREATE (C i CRUD) – lägger till en ny kategori med transaktion.
+        // CREATE
         public async Task AddAsync(Category category)
         {
-            IClientSessionHandle session = await _categoryCollection.Database.Client.StartSessionAsync();
+            using var session = await _categoryCollection.Database.Client.StartSessionAsync();
 
             try
             {
@@ -59,21 +51,20 @@ namespace DataLayer
             }
         }
 
-        // UPDATE (U i CRUD) – uppdaterar en kategori baserat på Id.
+        // UPDATE
         public async Task<bool> UpdateAsync(Category category)
         {
-            IClientSessionHandle session = await _categoryCollection.Database.Client.StartSessionAsync();
+            using var session = await _categoryCollection.Database.Client.StartSessionAsync();
 
             try
             {
                 session.StartTransaction();
 
-                FilterDefinition<Category> filter = Builders<Category>.Filter.Eq(c => c.Id, category.Id);
-                ReplaceOneResult result = await _categoryCollection.ReplaceOneAsync(session, filter, category);
+                var filter = Builders<Category>.Filter.Eq(c => c.Id, category.Id);
+                var result = await _categoryCollection.ReplaceOneAsync(session, filter, category);
 
                 await session.CommitTransactionAsync();
 
-                // true om något dokument faktiskt uppdaterades
                 return result.ModifiedCount > 0;
             }
             catch
@@ -83,21 +74,20 @@ namespace DataLayer
             }
         }
 
-        // DELETE (D i CRUD) – tar bort en kategori baserat på Id.
+        // DELETE
         public async Task<bool> DeleteAsync(string id)
         {
-            IClientSessionHandle session = await _categoryCollection.Database.Client.StartSessionAsync();
+            using var session = await _categoryCollection.Database.Client.StartSessionAsync();
 
             try
             {
                 session.StartTransaction();
 
-                FilterDefinition<Category> filter = Builders<Category>.Filter.Eq(c => c.Id, id);
-                DeleteResult result = await _categoryCollection.DeleteOneAsync(session, filter);
+                var filter = Builders<Category>.Filter.Eq(c => c.Id, id);
+                var result = await _categoryCollection.DeleteOneAsync(session, filter);
 
                 await session.CommitTransactionAsync();
 
-                // true om något dokument faktiskt togs bort
                 return result.DeletedCount > 0;
             }
             catch

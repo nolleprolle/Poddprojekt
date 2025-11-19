@@ -22,6 +22,6 @@ namespace ModelsLayer
 
         //Pekar på podcast
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? PoddReference { get; set; }
+        public string? PoddId { get; set; }
     }
 }

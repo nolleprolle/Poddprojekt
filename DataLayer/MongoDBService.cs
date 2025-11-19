@@ -24,7 +24,7 @@ namespace DataLayer
 
             _client = new MongoClient(settings);
 
-            // Välj din databas
+           
             _database = _client.GetDatabase("OruMongoDB");
         }
 

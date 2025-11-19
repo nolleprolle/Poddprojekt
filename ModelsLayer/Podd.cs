@@ -19,6 +19,8 @@ namespace ModelsLayer
         public string? Url { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string? CategoryId { get; set; }
+
+        [BsonIgnore]
         public List<Episode>? Episodes { get; set; } = new();
     }
 }

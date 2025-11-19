@@ -1,12 +1,14 @@
-﻿using System;
+﻿using ModelsLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLayer
+namespace BusinessLayer.IServices
 {
-    internal interface IRssClientService
+    public interface IRssClientService
     {
+        Task<List<Episode>> GetEpisodesFromRssAsync(string rssUrl);
     }
 }

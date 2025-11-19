@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataLayer
+
 {
     public class EpisodeRepository : IRepository<Episode>
     {
@@ -21,25 +22,23 @@ namespace DataLayer
         // READ ALL
         public async Task<List<Episode>> GetAllAsync()
         {
-            FilterDefinition<Episode> filter = Builders<Episode>.Filter.Empty;
-            IAsyncCursor<Episode> cursor = await _episodeCollection.FindAsync(filter);
-            List<Episode> episodes = await cursor.ToListAsync();
-            return episodes;
+            var filter = Builders<Episode>.Filter.Empty;
+            var cursor = await _episodeCollection.FindAsync(filter);
+            return await cursor.ToListAsync();
         }
 
         // READ ONE
         public async Task<Episode?> GetByIdAsync(string id)
         {
-            FilterDefinition<Episode> filter = Builders<Episode>.Filter.Eq(e => e.Id, id);
-            IAsyncCursor<Episode> cursor = await _episodeCollection.FindAsync(filter);
-            Episode episode = await cursor.FirstOrDefaultAsync();
-            return episode;
+            var filter = Builders<Episode>.Filter.Eq(e => e.Id, id);
+            var cursor = await _episodeCollection.FindAsync(filter);
+            return await cursor.FirstOrDefaultAsync();
         }
 
         // CREATE
         public async Task AddAsync(Episode episode)
         {
-            IClientSessionHandle session = await _episodeCollection.Database.Client.StartSessionAsync();
+            using var session = await _episodeCollection.Database.Client.StartSessionAsync();
 
             try
             {
@@ -56,17 +55,17 @@ namespace DataLayer
             }
         }
 
-        // UPDATE
+        // UPDATE 
         public async Task<bool> UpdateAsync(Episode episode)
         {
-            IClientSessionHandle session = await _episodeCollection.Database.Client.StartSessionAsync();
+            using var session = await _episodeCollection.Database.Client.StartSessionAsync();
 
             try
             {
                 session.StartTransaction();
 
-                FilterDefinition<Episode> filter = Builders<Episode>.Filter.Eq(e => e.Id, episode.Id);
-                ReplaceOneResult result = await _episodeCollection.ReplaceOneAsync(session, filter, episode);
+                var filter = Builders<Episode>.Filter.Eq(e => e.Id, episode.Id);
+                var result = await _episodeCollection.ReplaceOneAsync(session, filter, episode);
 
                 await session.CommitTransactionAsync();
 
@@ -82,14 +81,14 @@ namespace DataLayer
         // DELETE
         public async Task<bool> DeleteAsync(string id)
         {
-            IClientSessionHandle session = await _episodeCollection.Database.Client.StartSessionAsync();
+            using var session = await _episodeCollection.Database.Client.StartSessionAsync();
 
             try
             {
                 session.StartTransaction();
 
-                FilterDefinition<Episode> filter = Builders<Episode>.Filter.Eq(e => e.Id, id);
-                DeleteResult result = await _episodeCollection.DeleteOneAsync(session, filter);
+                var filter = Builders<Episode>.Filter.Eq(e => e.Id, id);
+                var result = await _episodeCollection.DeleteOneAsync(session, filter);
 
                 await session.CommitTransactionAsync();
 

@@ -43,16 +43,11 @@ namespace BusinessLayer
             return _episodeRepository.DeleteAsync(id);
         }
 
-        /// <summary>
-        /// Exempel på domänlogik i service-lagret:
-        /// Filtrera fram alla avsnitt som tillhör en viss podd.
-        /// (Enkel variant: hämta alla och filtrera i minnet.)
-        /// </summary>
         public async Task<List<Episode>> GetByPoddIdAsync(string poddId)
         {
             List<Episode> allEpisodes = await _episodeRepository.GetAllAsync();
             List<Episode> filtered = allEpisodes
-                .Where(e => e.Id == poddId)
+                .Where(e => e.PoddId == poddId)
                 .ToList();
             return filtered;
         }

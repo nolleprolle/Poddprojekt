@@ -15,7 +15,7 @@ namespace DataLayer
 {
     public class RssPoddClient
     {
-        private readonly HttpClient aHttpClient; //readonly då vi inte vill ha några oavsikliga ändringar (Vi tar ju in parametrar)
+        private readonly HttpClient aHttpClient;
 
         public RssPoddClient(HttpClient aHttpClient)
         {
@@ -23,8 +23,8 @@ namespace DataLayer
         }
         public async Task<List<Episode>> GetRssEpisodeAsync(string rssLink)
         {
-            using (Stream rssStream = await this.aHttpClient.GetStreamAsync(rssLink))
-            using (XmlReader ourXmlReader = XmlReader.Create(rssStream))
+            using (var rssStream = await this.aHttpClient.GetStreamAsync(rssLink))
+            using (var ourXmlReader = XmlReader.Create(rssStream))
             {
                 SyndicationFeed dataStream = SyndicationFeed.Load(ourXmlReader);
 
@@ -32,24 +32,19 @@ namespace DataLayer
 
                 foreach (SyndicationItem item in dataStream.Items)
                 {
-
-
-                    Episode aEpisode = new Episode();
-                    aEpisode.Id = item.Id.ToString();
-                    aEpisode.Title = item.Title.Text;
-                    aEpisode.Description = item.Summary.Text;
-                    aEpisode.AirDate = item.PublishDate.DateTime;
-                    aEpisode.Link = item.Links.First().Uri.ToString();
+                    var aEpisode = new Episode
+                    {
+                        Title = item.Title?.Text,
+                        Description = item.Summary?.Text,
+                        AirDate = item.PublishDate.DateTime,
+                        Link = item.Links.FirstOrDefault()?.Uri.ToString()
+                    };
 
                     poddsList.Add(aEpisode);
-
-
                 }
+
                 return poddsList;
-
             }
-
         }
-
     }
 }
