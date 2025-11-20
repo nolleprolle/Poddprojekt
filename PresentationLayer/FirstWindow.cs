@@ -51,7 +51,7 @@ namespace PresentationLayer
         }
 
         /// Hjälpmetod som tar bort HTML-taggar och dekodar HTML-entiteter.
-  
+
         private string StripHtml(string? input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -170,6 +170,16 @@ namespace PresentationLayer
 
         private void richTextBox1_TextChanged(object? sender, EventArgs e)
         {
+        }
+
+        private void txtPoddName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSave_click(object sender, EventArgs e)
+        {
+
         }
     }
 }

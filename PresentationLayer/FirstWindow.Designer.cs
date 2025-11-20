@@ -28,6 +28,8 @@
             btnGetInfo = new Button();
             dgvEpisodes = new DataGridView();
             rtxtEpisodeInfo = new RichTextBox();
+            btnSave = new Button();
+            txtPoddName = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodes).BeginInit();
             SuspendLayout();
             // 
@@ -75,11 +77,32 @@
             rtxtEpisodeInfo.Text = "";
             rtxtEpisodeInfo.TextChanged += richTextBox1_TextChanged;
             // 
+            // btnSave
+            // 
+            btnSave.Location = new Point(54, 634);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(272, 34);
+            btnSave.TabIndex = 7;
+            btnSave.Text = "Spara ner flödet till ditt register.";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_click;
+            // 
+            // txtPoddName
+            // 
+            txtPoddName.AccessibleName = "Vänligen ";
+            txtPoddName.Location = new Point(627, 637);
+            txtPoddName.Name = "txtPoddName";
+            txtPoddName.Size = new Size(200, 31);
+            txtPoddName.TabIndex = 8;
+            txtPoddName.TextChanged += txtPoddName_TextChanged;
+            // 
             // FirstWindow
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1237, 671);
+            Controls.Add(txtPoddName);
+            Controls.Add(btnSave);
             Controls.Add(rtxtEpisodeInfo);
             Controls.Add(dgvEpisodes);
             Controls.Add(btnGetInfo);
@@ -99,5 +122,7 @@
         private Button btnGetInfo;
         private DataGridView dgvEpisodes;
         private RichTextBox rtxtEpisodeInfo;
+        private Button btnSave;
+        private TextBox txtPoddName;
     }
 }
