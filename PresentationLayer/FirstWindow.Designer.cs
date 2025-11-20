@@ -23,106 +23,151 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtUrlInput = new TextBox();
-            lblUrlInput = new Label();
-            btnGetInfo = new Button();
-            dgvEpisodes = new DataGridView();
-            rtxtEpisodeInfo = new RichTextBox();
-            btnSave = new Button();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
             txtPoddName = new TextBox();
+            btnSave = new Button();
+            rtxtEpisodeInfo = new RichTextBox();
+            dgvEpisodes = new DataGridView();
+            btnGetInfo = new Button();
+            lblUrlInput = new Label();
+            txtUrlInput = new TextBox();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodes).BeginInit();
             SuspendLayout();
             // 
-            // txtUrlInput
+            // tabControl1
             // 
-            txtUrlInput.Location = new Point(54, 85);
-            txtUrlInput.Name = "txtUrlInput";
-            txtUrlInput.Size = new Size(231, 31);
-            txtUrlInput.TabIndex = 0;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Location = new Point(12, 12);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(1370, 636);
+            tabControl1.TabIndex = 9;
             // 
-            // lblUrlInput
+            // tabPage1
             // 
-            lblUrlInput.AutoSize = true;
-            lblUrlInput.Location = new Point(54, 57);
-            lblUrlInput.Name = "lblUrlInput";
-            lblUrlInput.Size = new Size(233, 25);
-            lblUrlInput.TabIndex = 1;
-            lblUrlInput.Text = "Ange källans URL (RSS-länk)";
+            tabPage1.Controls.Add(txtPoddName);
+            tabPage1.Controls.Add(btnSave);
+            tabPage1.Controls.Add(rtxtEpisodeInfo);
+            tabPage1.Controls.Add(dgvEpisodes);
+            tabPage1.Controls.Add(btnGetInfo);
+            tabPage1.Controls.Add(lblUrlInput);
+            tabPage1.Controls.Add(txtUrlInput);
+            tabPage1.Location = new Point(4, 29);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(1362, 603);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "tabPage1";
+            tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Click += tabPage1_Click;
             // 
-            // btnGetInfo
+            // tabPage2
             // 
-            btnGetInfo.Location = new Point(56, 122);
-            btnGetInfo.Name = "btnGetInfo";
-            btnGetInfo.Size = new Size(112, 34);
-            btnGetInfo.TabIndex = 2;
-            btnGetInfo.Text = "Hämta";
-            btnGetInfo.UseVisualStyleBackColor = true;
-            btnGetInfo.Click += btnGetInfo_Click;
-            // 
-            // dgvEpisodes
-            // 
-            dgvEpisodes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEpisodes.Location = new Point(54, 188);
-            dgvEpisodes.Name = "dgvEpisodes";
-            dgvEpisodes.RowHeadersWidth = 62;
-            dgvEpisodes.Size = new Size(557, 440);
-            dgvEpisodes.TabIndex = 3;
-            // 
-            // rtxtEpisodeInfo
-            // 
-            rtxtEpisodeInfo.Location = new Point(627, 188);
-            rtxtEpisodeInfo.Name = "rtxtEpisodeInfo";
-            rtxtEpisodeInfo.Size = new Size(557, 440);
-            rtxtEpisodeInfo.TabIndex = 6;
-            rtxtEpisodeInfo.Text = "";
-            rtxtEpisodeInfo.TextChanged += richTextBox1_TextChanged;
-            // 
-            // btnSave
-            // 
-            btnSave.Location = new Point(54, 634);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(272, 34);
-            btnSave.TabIndex = 7;
-            btnSave.Text = "Spara ner flödet till ditt register.";
-            btnSave.UseVisualStyleBackColor = true;
-            btnSave.Click += btnSave_click;
+            tabPage2.Location = new Point(4, 29);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(242, 92);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "tabPage2";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // txtPoddName
             // 
             txtPoddName.AccessibleName = "Vänligen ";
-            txtPoddName.Location = new Point(627, 637);
+            txtPoddName.Location = new Point(499, 512);
+            txtPoddName.Margin = new Padding(2);
             txtPoddName.Name = "txtPoddName";
-            txtPoddName.Size = new Size(200, 31);
-            txtPoddName.TabIndex = 8;
-            txtPoddName.TextChanged += txtPoddName_TextChanged;
+            txtPoddName.Size = new Size(161, 27);
+            txtPoddName.TabIndex = 15;
+            // 
+            // btnSave
+            // 
+            btnSave.Location = new Point(40, 509);
+            btnSave.Margin = new Padding(2);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(218, 27);
+            btnSave.TabIndex = 14;
+            btnSave.Text = "Spara ner flödet till ditt register.";
+            btnSave.UseVisualStyleBackColor = true;
+            // 
+            // rtxtEpisodeInfo
+            // 
+            rtxtEpisodeInfo.Location = new Point(499, 152);
+            rtxtEpisodeInfo.Margin = new Padding(2);
+            rtxtEpisodeInfo.Name = "rtxtEpisodeInfo";
+            rtxtEpisodeInfo.Size = new Size(446, 353);
+            rtxtEpisodeInfo.TabIndex = 13;
+            rtxtEpisodeInfo.Text = "";
+            // 
+            // dgvEpisodes
+            // 
+            dgvEpisodes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEpisodes.Location = new Point(40, 152);
+            dgvEpisodes.Margin = new Padding(2);
+            dgvEpisodes.Name = "dgvEpisodes";
+            dgvEpisodes.RowHeadersWidth = 62;
+            dgvEpisodes.Size = new Size(446, 352);
+            dgvEpisodes.TabIndex = 12;
+            // 
+            // btnGetInfo
+            // 
+            btnGetInfo.Location = new Point(42, 100);
+            btnGetInfo.Margin = new Padding(2);
+            btnGetInfo.Name = "btnGetInfo";
+            btnGetInfo.Size = new Size(90, 27);
+            btnGetInfo.TabIndex = 11;
+            btnGetInfo.Text = "Hämta";
+            btnGetInfo.UseVisualStyleBackColor = true;
+            // 
+            // lblUrlInput
+            // 
+            lblUrlInput.AutoSize = true;
+            lblUrlInput.Location = new Point(40, 48);
+            lblUrlInput.Margin = new Padding(2, 0, 2, 0);
+            lblUrlInput.Name = "lblUrlInput";
+            lblUrlInput.Size = new Size(195, 20);
+            lblUrlInput.TabIndex = 10;
+            lblUrlInput.Text = "Ange källans URL (RSS-länk)";
+            // 
+            // txtUrlInput
+            // 
+            txtUrlInput.Location = new Point(40, 70);
+            txtUrlInput.Margin = new Padding(2);
+            txtUrlInput.Name = "txtUrlInput";
+            txtUrlInput.Size = new Size(186, 27);
+            txtUrlInput.TabIndex = 9;
             // 
             // FirstWindow
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1237, 671);
-            Controls.Add(txtPoddName);
-            Controls.Add(btnSave);
-            Controls.Add(rtxtEpisodeInfo);
-            Controls.Add(dgvEpisodes);
-            Controls.Add(btnGetInfo);
-            Controls.Add(lblUrlInput);
-            Controls.Add(txtUrlInput);
+            ClientSize = new Size(1451, 733);
+            Controls.Add(tabControl1);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "FirstWindow";
             Text = "FirstWindow";
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodes).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private TextBox txtUrlInput;
-        private Label lblUrlInput;
-        private Button btnGetInfo;
-        private DataGridView dgvEpisodes;
-        private RichTextBox rtxtEpisodeInfo;
-        private Button btnSave;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
         private TextBox txtPoddName;
+        private Button btnSave;
+        private RichTextBox rtxtEpisodeInfo;
+        private DataGridView dgvEpisodes;
+        private Button btnGetInfo;
+        private Label lblUrlInput;
+        private TextBox txtUrlInput;
     }
 }
