@@ -165,24 +165,12 @@ namespace PresentationLayer
             }
         }
 
-        /// Designer har kopplat detta event – vi behöver inte göra något här.
-        /// Du kan låta det vara tomt eller ta bort eventkopplingen i designer.
-
-        private void richTextBox1_TextChanged(object? sender, EventArgs e)
-        {
-        }
-
-        private void txtPoddName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnSave_click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEditPodd_click(object sender, EventArgs e)
         {
 
         }
