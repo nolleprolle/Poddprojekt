@@ -182,6 +182,7 @@
             btnSave.TabIndex = 14;
             btnSave.Text = "Spara ner flödet till ditt register.";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
             // 
             // dgvEpisodes
             // 
@@ -202,6 +203,7 @@
             btnGetInfo.TabIndex = 11;
             btnGetInfo.Text = "Hämta";
             btnGetInfo.UseVisualStyleBackColor = true;
+            btnGetInfo.Click += btnGetInfo_Click;
             // 
             // lblUrlInput
             // 

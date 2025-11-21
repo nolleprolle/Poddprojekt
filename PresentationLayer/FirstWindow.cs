@@ -197,7 +197,7 @@ namespace PresentationLayer
                 return;
             }
             string poddName = txtPoddName.Text.Trim();
-            if (string.IsNullOrWhiteSpace(poddName) || poddName == "Ange namn till flödet.")
+            if (string.IsNullOrWhiteSpace(poddName) || poddName == "Ange namn till flödet")
             {
                 MessageBox.Show("Ange ett namn för poddflödet!");
                 return;
