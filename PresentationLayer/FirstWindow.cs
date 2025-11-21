@@ -45,9 +45,28 @@ namespace PresentationLayer
             dgvEpisodes.SelectionChanged += dgvEpisodes_SelectionChanged;
 
             // RichTextBox ska bara visa info
-            rtxtEpisodeInfo.ReadOnly = true;
-            rtxtEpisodeInfo.WordWrap = true;
-            rtxtEpisodeInfo.ScrollBars = RichTextBoxScrollBars.Vertical;
+            rtbEpisodeInfo.ReadOnly = true;
+            rtbEpisodeInfo.WordWrap = true;
+            rtbEpisodeInfo.ScrollBars = RichTextBoxScrollBars.Vertical;
+        }
+        private async void FirstWindow_Load(object? sender, EventArgs e)
+        {
+            try
+            {
+                var categories = await _categoryService.GetAllAsync();
+                cbCategory.DataSource = new List<Category>(categories);
+                cbCategory.DisplayMember = "Name";
+                cbCategory.ValueMember = "Id";
+                cbCategory.SelectedIndex = categories.Count > 0 ? 0 : -1;
+
+                cbCategoryFiltration.DataSource = new List<Category>(categories);
+                cbCategoryFiltration.DisplayMember = "Name";
+                cbCategoryFiltration.ValueMember = "Id";
+                cbCategoryFiltration.SelectedIndex = -1;
+            }
+            catch (Exception ex){ 
+            MessageBox.Show("Kunde inte ladda kategorier:\r\n" + ex.Message);
+            }
         }
 
         /// Hjälpmetod som tar bort HTML-taggar och dekodar HTML-entiteter.
@@ -83,7 +102,7 @@ namespace PresentationLayer
             try
             {
                 btnGetInfo.Enabled = false;
-                rtxtEpisodeInfo.Clear();
+                rtbEpisodeInfo.Clear();
                 dgvEpisodes.DataSource = null;
 
                 // Hämta episoder via BusinessLayer-tjänsten
@@ -137,34 +156,91 @@ namespace PresentationLayer
         {
             if (dgvEpisodes.CurrentRow?.DataBoundItem is Episode ep)
             {
-                rtxtEpisodeInfo.Clear();
+                rtbEpisodeInfo.Clear();
 
                 // Titel
-                rtxtEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
-                rtxtEpisodeInfo.AppendText("Titel: ");
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+                rtbEpisodeInfo.AppendText("Titel: ");
 
-                rtxtEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
-                rtxtEpisodeInfo.AppendText((ep.Title ?? "(ingen titel)") + "\n\n");
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
+                rtbEpisodeInfo.AppendText((ep.Title ?? "(ingen titel)") + "\n\n");
 
                 // Datum
-                rtxtEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
-                rtxtEpisodeInfo.AppendText("Publicerad: ");
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+                rtbEpisodeInfo.AppendText("Publicerad: ");
 
-                rtxtEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
                 string dateText = ep.AirDate.HasValue
                     ? ep.AirDate.Value.ToString("yyyy-MM-dd HH:mm")
                     : "(okänt datum)";
-                rtxtEpisodeInfo.AppendText(dateText + "\n\n");
+                rtbEpisodeInfo.AppendText(dateText + "\n\n");
 
                 // Beskrivning
-                rtxtEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
-                rtxtEpisodeInfo.AppendText("Beskrivning:\n");
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+                rtbEpisodeInfo.AppendText("Beskrivning:\n");
 
-                rtxtEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
-                rtxtEpisodeInfo.AppendText(ep.Description ?? "(ingen beskrivning)");
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
+                rtbEpisodeInfo.AppendText(ep.Description ?? "(ingen beskrivning)");
             }
         }
+        private async void btnSave_Click(object? sender, EventArgs e)
+        {
+            if(_loadedEpisodes == null || _loadedEpisodes.Count == 0 )
+            { 
+            MessageBox.Show("Du måste läsa in ett RSS-flöde innan du kan spara!");
+                return;
+            }
+            string url = txtUrlInput.Text.Trim();
+            if (string.IsNullOrWhiteSpace(url)) 
+            {
+                MessageBox.Show("RSS-länken saknas!");
+                return;
+            }
+            string poddName = txtPoddName.Text.Trim();
+            if (string.IsNullOrWhiteSpace(poddName) || poddName == "Ange namn till flödet.")
+            {
+                MessageBox.Show("Ange ett namn för poddflödet!");
+                return;
+            }
+            string? categoryId = null;
+            if (cbCategory.SelectedItem is Category selectedCategory)
+            {
+                categoryId = selectedCategory.Id;
 
+            }
+            try
+            {
+                btnSave.Enabled = false;
+                var podd = new Podd
+                {
+                    Name = poddName,
+                    Url = url,
+                    CategoryId = categoryId
+
+                };
+                await _poddService.AddAsync(podd);
+                if (string.IsNullOrEmpty(podd.Id))
+                {
+                    MessageBox.Show("Kunde inte få tillbaka poddens Id efter sparande.");
+                    return;
+
+                }
+                foreach (var ep in _loadedEpisodes)
+                { 
+                    ep.PoddId = podd.Id;
+                    await _episodeService.AddAsync(ep);
+                }
+                MessageBox.Show("Du har sparat ner poddflödet.");
+            }
+            catch(Exception ex)
+            {
+             MessageBox.Show("Något gick fel när du skulle spara flödet:\r\n" + ex.Message);
+            }
+            finally
+            {
+                btnSave.Enabled = true;
+            }
+        }
         private void tabPage1_Click(object sender, EventArgs e)
         {
 

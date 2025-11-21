@@ -24,26 +24,25 @@
         private void InitializeComponent()
         {
             tabPage2 = new TabPage();
-            dataGridView2 = new DataGridView();
+            btnDelete = new Button();
+            btnEditCategory = new Button();
+            dgvPoddNames = new DataGridView();
             cbCategoryFiltration = new ComboBox();
-            richTextBox1 = new RichTextBox();
-            dataGridView1 = new DataGridView();
+            rtbDescription = new RichTextBox();
+            dgvEpisodeRegister = new DataGridView();
             tabPage1 = new TabPage();
+            cbCategory = new ComboBox();
             txtPoddName = new TextBox();
-            rtxtEpisodeInfo = new RichTextBox();
+            rtbEpisodeInfo = new RichTextBox();
             txtUrlInput = new TextBox();
             btnSave = new Button();
             dgvEpisodes = new DataGridView();
             btnGetInfo = new Button();
             lblUrlInput = new Label();
             tabControl1 = new TabControl();
-            //btnEditPodd = new Button();
-            cbCategory = new ComboBox();
-            btnEditCategory = new Button();
-            btnDelete = new Button();
             tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPoddNames).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvEpisodeRegister).BeginInit();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodes).BeginInit();
             tabControl1.SuspendLayout();
@@ -53,11 +52,10 @@
             // 
             tabPage2.Controls.Add(btnDelete);
             tabPage2.Controls.Add(btnEditCategory);
-            //tabPage2.Controls.Add(btnEditPodd);
-            tabPage2.Controls.Add(dataGridView2);
+            tabPage2.Controls.Add(dgvPoddNames);
             tabPage2.Controls.Add(cbCategoryFiltration);
-            tabPage2.Controls.Add(richTextBox1);
-            tabPage2.Controls.Add(dataGridView1);
+            tabPage2.Controls.Add(rtbDescription);
+            tabPage2.Controls.Add(dgvEpisodeRegister);
             tabPage2.Location = new Point(4, 34);
             tabPage2.Margin = new Padding(4);
             tabPage2.Name = "tabPage2";
@@ -68,14 +66,32 @@
             tabPage2.UseVisualStyleBackColor = true;
             tabPage2.Click += btnEditPodd_click;
             // 
-            // dataGridView2
+            // btnDelete
             // 
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(37, 173);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersWidth = 62;
-            dataGridView2.Size = new Size(360, 479);
-            dataGridView2.TabIndex = 3;
+            btnDelete.Location = new Point(458, 667);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(112, 34);
+            btnDelete.TabIndex = 6;
+            btnDelete.Text = "Radera";
+            btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnEditCategory
+            // 
+            btnEditCategory.Location = new Point(231, 667);
+            btnEditCategory.Name = "btnEditCategory";
+            btnEditCategory.Size = new Size(166, 34);
+            btnEditCategory.TabIndex = 5;
+            btnEditCategory.Text = "Redigera kategori";
+            btnEditCategory.UseVisualStyleBackColor = true;
+            // 
+            // dgvPoddNames
+            // 
+            dgvPoddNames.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPoddNames.Location = new Point(37, 173);
+            dgvPoddNames.Name = "dgvPoddNames";
+            dgvPoddNames.RowHeadersWidth = 62;
+            dgvPoddNames.Size = new Size(360, 479);
+            dgvPoddNames.TabIndex = 3;
             // 
             // cbCategoryFiltration
             // 
@@ -85,28 +101,28 @@
             cbCategoryFiltration.Size = new Size(364, 33);
             cbCategoryFiltration.TabIndex = 2;
             // 
-            // richTextBox1
+            // rtbDescription
             // 
-            richTextBox1.Location = new Point(872, 173);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(570, 479);
-            richTextBox1.TabIndex = 1;
-            richTextBox1.Text = "";
+            rtbDescription.Location = new Point(872, 173);
+            rtbDescription.Name = "rtbDescription";
+            rtbDescription.Size = new Size(570, 479);
+            rtbDescription.TabIndex = 1;
+            rtbDescription.Text = "";
             // 
-            // dataGridView1
+            // dgvEpisodeRegister
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(458, 173);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(364, 479);
-            dataGridView1.TabIndex = 0;
+            dgvEpisodeRegister.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEpisodeRegister.Location = new Point(458, 173);
+            dgvEpisodeRegister.Name = "dgvEpisodeRegister";
+            dgvEpisodeRegister.RowHeadersWidth = 62;
+            dgvEpisodeRegister.Size = new Size(364, 479);
+            dgvEpisodeRegister.TabIndex = 0;
             // 
             // tabPage1
             // 
             tabPage1.Controls.Add(cbCategory);
             tabPage1.Controls.Add(txtPoddName);
-            tabPage1.Controls.Add(rtxtEpisodeInfo);
+            tabPage1.Controls.Add(rtbEpisodeInfo);
             tabPage1.Controls.Add(txtUrlInput);
             tabPage1.Controls.Add(btnSave);
             tabPage1.Controls.Add(dgvEpisodes);
@@ -122,6 +138,14 @@
             tabPage1.UseVisualStyleBackColor = true;
             tabPage1.Click += tabPage1_Click;
             // 
+            // cbCategory
+            // 
+            cbCategory.FormattingEnabled = true;
+            cbCategory.Location = new Point(624, 686);
+            cbCategory.Name = "cbCategory";
+            cbCategory.Size = new Size(182, 33);
+            cbCategory.TabIndex = 16;
+            // 
             // txtPoddName
             // 
             txtPoddName.AccessibleName = "Vänligen ";
@@ -132,14 +156,14 @@
             txtPoddName.TabIndex = 15;
             txtPoddName.Text = "Ange namn till flödet";
             // 
-            // rtxtEpisodeInfo
+            // rtbEpisodeInfo
             // 
-            rtxtEpisodeInfo.Location = new Point(624, 190);
-            rtxtEpisodeInfo.Margin = new Padding(2);
-            rtxtEpisodeInfo.Name = "rtxtEpisodeInfo";
-            rtxtEpisodeInfo.Size = new Size(556, 440);
-            rtxtEpisodeInfo.TabIndex = 13;
-            rtxtEpisodeInfo.Text = "";
+            rtbEpisodeInfo.Location = new Point(624, 190);
+            rtbEpisodeInfo.Margin = new Padding(2);
+            rtbEpisodeInfo.Name = "rtbEpisodeInfo";
+            rtbEpisodeInfo.Size = new Size(556, 440);
+            rtbEpisodeInfo.TabIndex = 13;
+            rtbEpisodeInfo.Text = "";
             // 
             // txtUrlInput
             // 
@@ -201,42 +225,6 @@
             tabControl1.Size = new Size(1712, 795);
             tabControl1.TabIndex = 9;
             // 
-            // btnEditPodd
-            // 
-            //btnEditPodd.Location = new Point(37, 667);
-            //btnEditPodd.Name = "btnEditPodd";
-            ////btnEditPodd.Size = new Size(167, 34);
-            //btnEditPodd.TabIndex = 4;
-            //btnEditPodd.Text = "Redigera Flöde";
-            //btnEditPodd.UseVisualStyleBackColor = true;
-            //btnEditPodd.Click += this.btnEditPodd_click;
-            // 
-            // cbCategory
-            // 
-            cbCategory.FormattingEnabled = true;
-            cbCategory.Location = new Point(624, 686);
-            cbCategory.Name = "cbCategory";
-            cbCategory.Size = new Size(182, 33);
-            cbCategory.TabIndex = 16;
-            // 
-            // btnEditCategory
-            // 
-            btnEditCategory.Location = new Point(231, 667);
-            btnEditCategory.Name = "btnEditCategory";
-            btnEditCategory.Size = new Size(166, 34);
-            btnEditCategory.TabIndex = 5;
-            btnEditCategory.Text = "Redigera kategori";
-            btnEditCategory.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(458, 667);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(112, 34);
-            btnDelete.TabIndex = 6;
-            btnDelete.Text = "Radera";
-            btnDelete.UseVisualStyleBackColor = true;
-            // 
             // FirstWindow
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -247,8 +235,8 @@
             Name = "FirstWindow";
             Text = "FirstWindow";
             tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPoddNames).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvEpisodeRegister).EndInit();
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodes).EndInit();
@@ -259,18 +247,18 @@
         #endregion
 
         private TabPage tabPage2;
-        private RichTextBox richTextBox1;
-        private DataGridView dataGridView1;
+        private RichTextBox rtbDescription;
+        private DataGridView dgvEpisodeRegister;
         private TabPage tabPage1;
         private TextBox txtPoddName;
-        private RichTextBox rtxtEpisodeInfo;
+        private RichTextBox rtbEpisodeInfo;
         private TextBox txtUrlInput;
         private Button btnSave;
         private DataGridView dgvEpisodes;
         private Button btnGetInfo;
         private Label lblUrlInput;
         private TabControl tabControl1;
-        private DataGridView dataGridView2;
+        private DataGridView dgvPoddNames;
         private ComboBox cbCategoryFiltration;
         private Button btnEditPodd;
         private ComboBox cbCategory;
