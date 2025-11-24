@@ -64,8 +64,9 @@ namespace PresentationLayer
                 cbCategoryFiltration.ValueMember = "Id";
                 cbCategoryFiltration.SelectedIndex = -1;
             }
-            catch (Exception ex){ 
-            MessageBox.Show("Kunde inte ladda kategorier:\r\n" + ex.Message);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunde inte ladda kategorier:\r\n" + ex.Message);
             }
         }
 
@@ -185,13 +186,13 @@ namespace PresentationLayer
         }
         private async void btnSave_Click(object? sender, EventArgs e)
         {
-            if(_loadedEpisodes == null || _loadedEpisodes.Count == 0 )
-            { 
-            MessageBox.Show("Du måste läsa in ett RSS-flöde innan du kan spara!");
+            if (_loadedEpisodes == null || _loadedEpisodes.Count == 0)
+            {
+                MessageBox.Show("Du måste läsa in ett RSS-flöde innan du kan spara!");
                 return;
             }
             string url = txtUrlInput.Text.Trim();
-            if (string.IsNullOrWhiteSpace(url)) 
+            if (string.IsNullOrWhiteSpace(url))
             {
                 MessageBox.Show("RSS-länken saknas!");
                 return;
@@ -226,15 +227,15 @@ namespace PresentationLayer
 
                 }
                 foreach (var ep in _loadedEpisodes)
-                { 
+                {
                     ep.PoddId = podd.Id;
                     await _episodeService.AddAsync(ep);
                 }
                 MessageBox.Show("Du har sparat ner poddflödet.");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-             MessageBox.Show("Något gick fel när du skulle spara flödet:\r\n" + ex.Message);
+                MessageBox.Show("Något gick fel när du skulle spara flödet:\r\n" + ex.Message);
             }
             finally
             {
@@ -247,6 +248,16 @@ namespace PresentationLayer
         }
 
         private void btnEditPodd_click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

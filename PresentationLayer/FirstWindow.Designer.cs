@@ -40,6 +40,12 @@
             btnGetInfo = new Button();
             lblUrlInput = new Label();
             tabControl1 = new TabControl();
+            lblSlctName = new Label();
+            lblSlctCategory = new Label();
+            lblPods = new Label();
+            lblCategory = new Label();
+            lblDescription = new Label();
+            lblFilterCategory = new Label();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPoddNames).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodeRegister).BeginInit();
@@ -50,6 +56,10 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(lblFilterCategory);
+            tabPage2.Controls.Add(lblDescription);
+            tabPage2.Controls.Add(lblCategory);
+            tabPage2.Controls.Add(lblPods);
             tabPage2.Controls.Add(btnDelete);
             tabPage2.Controls.Add(btnEditCategory);
             tabPage2.Controls.Add(dgvPoddNames);
@@ -120,6 +130,8 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(lblSlctCategory);
+            tabPage1.Controls.Add(lblSlctName);
             tabPage1.Controls.Add(cbCategory);
             tabPage1.Controls.Add(txtPoddName);
             tabPage1.Controls.Add(rtbEpisodeInfo);
@@ -154,7 +166,6 @@
             txtPoddName.Name = "txtPoddName";
             txtPoddName.Size = new Size(200, 31);
             txtPoddName.TabIndex = 15;
-            txtPoddName.Text = "Ange namn till flödet";
             // 
             // rtbEpisodeInfo
             // 
@@ -227,6 +238,62 @@
             tabControl1.Size = new Size(1712, 795);
             tabControl1.TabIndex = 9;
             // 
+            // lblSlctName
+            // 
+            lblSlctName.AutoSize = true;
+            lblSlctName.Location = new Point(427, 646);
+            lblSlctName.Name = "lblSlctName";
+            lblSlctName.Size = new Size(185, 25);
+            lblSlctName.TabIndex = 17;
+            lblSlctName.Text = "Ange namn på flödet:";
+            // 
+            // lblSlctCategory
+            // 
+            lblSlctCategory.AutoSize = true;
+            lblSlctCategory.Location = new Point(498, 686);
+            lblSlctCategory.Name = "lblSlctCategory";
+            lblSlctCategory.Size = new Size(114, 25);
+            lblSlctCategory.TabIndex = 18;
+            lblSlctCategory.Text = "Välj kategori:";
+            // 
+            // lblPods
+            // 
+            lblPods.AutoSize = true;
+            lblPods.Location = new Point(37, 144);
+            lblPods.Name = "lblPods";
+            lblPods.Size = new Size(104, 25);
+            lblPods.TabIndex = 7;
+            lblPods.Text = "Dina flöden";
+            lblPods.Click += label1_Click;
+            // 
+            // lblCategory
+            // 
+            lblCategory.AutoSize = true;
+            lblCategory.Location = new Point(461, 140);
+            lblCategory.Name = "lblCategory";
+            lblCategory.Size = new Size(67, 25);
+            lblCategory.TabIndex = 8;
+            lblCategory.Text = "Avsnitt";
+            // 
+            // lblDescription
+            // 
+            lblDescription.AutoSize = true;
+            lblDescription.Location = new Point(875, 143);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(102, 25);
+            lblDescription.TabIndex = 9;
+            lblDescription.Text = "Beskrivning";
+            lblDescription.Click += label3_Click;
+            // 
+            // lblFilterCategory
+            // 
+            lblFilterCategory.AutoSize = true;
+            lblFilterCategory.Location = new Point(272, 75);
+            lblFilterCategory.Name = "lblFilterCategory";
+            lblFilterCategory.Size = new Size(180, 25);
+            lblFilterCategory.TabIndex = 10;
+            lblFilterCategory.Text = "Filtrera efter kategori:";
+            // 
             // FirstWindow
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -237,6 +304,7 @@
             Name = "FirstWindow";
             Text = "FirstWindow";
             tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPoddNames).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodeRegister).EndInit();
             tabPage1.ResumeLayout(false);
@@ -266,6 +334,12 @@
         private ComboBox cbCategory;
         private Button btnDelete;
         private Button btnEditCategory;
+        private Label lblSlctCategory;
+        private Label lblSlctName;
+        private Label lblDescription;
+        private Label lblCategory;
+        private Label lblPods;
+        private Label lblFilterCategory;
         //private Button btnEditPodd;
     }
 }
