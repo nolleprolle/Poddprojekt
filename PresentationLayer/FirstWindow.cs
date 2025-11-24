@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using BusinessLayer;
 using BusinessLayer.IServices;
 using ModelsLayer;
+using System.Linq;
 
 namespace PresentationLayer
 {
@@ -42,13 +43,29 @@ namespace PresentationLayer
             _episodeService = episodeService;
             _categoryService = categoryService;
 
-            dgvEpisodes.SelectionChanged += dgvEpisodes_SelectionChanged;
+            this.Load += FirstWindow_Load;
 
-            // RichTextBox ska bara visa info
+            dgvEpisodes.SelectionChanged += dgvEpisodes_SelectionChanged;
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+            cbCategoryFiltration.SelectedIndexChanged += cbCategoryFiltration_SelectedIndexChanged;
+            dgvPoddNames.SelectionChanged += dgvPoddnames_SelectionChanged;
+            dgvEpisodeRegister.SelectionChanged += dgvEpisodeRegister_SelectionChanged;
+
+
             rtbEpisodeInfo.ReadOnly = true;
             rtbEpisodeInfo.WordWrap = true;
             rtbEpisodeInfo.ScrollBars = RichTextBoxScrollBars.Vertical;
+
+            rtbDescription.ReadOnly = true;
+            rtbDescription.WordWrap = true;
+            rtbDescription.ScrollBars = RichTextBoxScrollBars.Vertical;
         }
+
+
+
+
+
+
         private async void FirstWindow_Load(object? sender, EventArgs e)
         {
             try
@@ -69,6 +86,160 @@ namespace PresentationLayer
                 MessageBox.Show("Kunde inte ladda kategorier:\r\n" + ex.Message);
             }
         }
+
+        private async Task LoadPoddRegisterAsync()
+        {
+            try
+            {
+                var allPodds = await _poddService.GetAllAsync();
+
+                string? selectedCategoryId = null;
+
+                if (cbCategoryFiltration.SelectedItem is Category selectedCategory)
+                {
+                    selectedCategoryId = selectedCategory.Id;
+                }
+
+                List<Podd> filteredPodds;
+                if (!string.IsNullOrEmpty(selectedCategoryId))
+                {
+                    filteredPodds = allPodds
+                        .Where(p => p.CategoryId == selectedCategoryId)
+                        .ToList();
+                }
+                else
+                {
+                    filteredPodds = allPodds;
+                }
+
+                dgvPoddNames.AutoGenerateColumns = false;
+                dgvPoddNames.Columns.Clear();
+
+                var nameCol = new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "Name",
+                    HeaderText = "Podd",
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+
+                var urlCol = new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "Url",
+                    HeaderText = "RSS-URL",
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+
+                dgvPoddNames.Columns.Add(nameCol);
+                dgvPoddNames.Columns.Add(urlCol);
+
+                dgvPoddNames.DataSource = filteredPodds;
+
+                dgvEpisodeRegister.DataSource = null;
+                rtbDescription.Clear();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunde inte ladda poddregistret:\r\n" + ex.Message);
+            }
+        }
+
+        private async void tabControl1_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabPage2)
+            {
+                await LoadPoddRegisterAsync();
+            }
+        }
+
+        private async void cbCategoryFiltration_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabPage2)
+            {
+                await LoadPoddRegisterAsync();
+            }
+
+
+        }
+
+        private async void dgvPoddnames_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id))
+            {
+                return;
+            }
+
+
+            try
+            {
+                var episodes = await _episodeService.GetByPoddIdAsync(podd.Id);
+
+                dgvEpisodeRegister.AutoGenerateColumns = false;
+                dgvEpisodeRegister.Columns.Clear();
+
+                var titleCol = new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "Title",
+                    HeaderText = "Avsnitt",
+                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                };
+
+                var dateCol = new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "AirDate",
+                    HeaderText = "Publicerad",
+                    DefaultCellStyle = { Format = "yyyy-MM-dd" }
+                };
+
+                dgvEpisodeRegister.Columns.Add(titleCol);
+                dgvEpisodeRegister.Columns.Add(dateCol);
+
+                dgvEpisodeRegister.DataSource = episodes;
+
+                rtbDescription.Clear();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunde inte hämta avsnitt för vald podd:\r\n" + ex.Message);
+            }
+
+        }
+
+        private void dgvEpisodeRegister_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (dgvEpisodeRegister.CurrentRow?.DataBoundItem is not Episode ep)
+            {
+                return;
+            }
+
+            rtbDescription.Clear();
+
+            // Titel
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            rtbDescription.AppendText("Titel: ");
+
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
+            rtbDescription.AppendText((ep.Title ?? "(ingen titel)") + "\n\n");
+
+            // Datum
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            rtbDescription.AppendText("Publicerad: ");
+
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
+            string dateText = ep.AirDate.HasValue
+                ? ep.AirDate.Value.ToString("yyyy-MM-dd HH:mm")
+                : "(okänt datum)";
+            rtbDescription.AppendText(dateText + "\n\n");
+
+            // Beskrivning
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            rtbDescription.AppendText("Beskrivning:\n");
+
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
+            rtbDescription.AppendText(ep.Description ?? "(ingen beskrivning)");
+        }
+
 
         /// Hjälpmetod som tar bort HTML-taggar och dekodar HTML-entiteter.
 
@@ -258,6 +429,11 @@ namespace PresentationLayer
         }
 
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
         {
 
         }
