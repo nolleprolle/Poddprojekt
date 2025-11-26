@@ -638,6 +638,19 @@ namespace PresentationLayer
 
             try
             {
+
+                var episodes = await _episodeService.GetByPoddIdAsync(podd.Id);
+
+                foreach (var ep in episodes)
+                {
+
+                    if (!string.IsNullOrEmpty(ep.Id))
+                    {
+                        await _episodeService.DeleteAsync(ep.Id);
+                    }
+
+                }
+
                 bool ok = await _poddService.DeleteAsync(podd.Id);
 
                 if (!ok)
