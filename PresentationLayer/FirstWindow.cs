@@ -8,7 +8,7 @@ using BusinessLayer;
 using BusinessLayer.IServices;
 using ModelsLayer;
 using System.Linq;
-
+using System.Threading.Tasks;
 namespace PresentationLayer
 {
     public partial class FirstWindow : Form
@@ -51,6 +51,8 @@ namespace PresentationLayer
             dgvPoddNames.SelectionChanged += dgvPoddnames_SelectionChanged;
             dgvEpisodeRegister.SelectionChanged += dgvEpisodeRegister_SelectionChanged;
 
+            btnEditPod.Click += btnEditPod_Click;
+
 
             rtbEpisodeInfo.ReadOnly = true;
             rtbEpisodeInfo.WordWrap = true;
@@ -70,20 +72,193 @@ namespace PresentationLayer
         {
             try
             {
-                var categories = await _categoryService.GetAllAsync();
-                cbCategory.DataSource = new List<Category>(categories);
-                cbCategory.DisplayMember = "Name";
-                cbCategory.ValueMember = "Id";
-                cbCategory.SelectedIndex = categories.Count > 0 ? 0 : -1;
+                await ReloadCategoriesAsync();
 
-                cbCategoryFiltration.DataSource = new List<Category>(categories);
-                cbCategoryFiltration.DisplayMember = "Name";
-                cbCategoryFiltration.ValueMember = "Id";
-                cbCategoryFiltration.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Kunde inte ladda kategorier:\r\n" + ex.Message);
+            }
+        }
+        //try
+        //{
+        //    var categories = await _categoryService.GetAllAsync();
+        //    cbCategory.DataSource = new List<Category>(categories);
+        //    cbCategory.DisplayMember = "Name";
+        //    cbCategory.ValueMember = "Id";
+        //    cbCategory.SelectedIndex = categories.Count > 0 ? 0 : -1;
+
+        //    cbCategoryFiltration.DataSource = new List<Category>(categories);
+        //    cbCategoryFiltration.DisplayMember = "Name";
+        //    cbCategoryFiltration.ValueMember = "Id";
+        //    cbCategoryFiltration.SelectedIndex = -1;
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show("Kunde inte ladda kategorier:\r\n" + ex.Message);
+        //}
+
+        private async Task ReloadCategoriesAsync()
+        {
+            var categories = await _categoryService.GetAllAsync();
+
+            cbCategory.DataSource = new List<Category>(categories);
+            cbCategory.DisplayMember = "Name";
+            cbCategory.ValueMember = "Id";
+            cbCategory.SelectedIndex = categories.Count > 0 ? 0 : -1;
+
+            cbCategoryFiltration.DataSource = new List<Category>(categories);
+            cbCategoryFiltration.DisplayMember = "Name";
+            cbCategoryFiltration.ValueMember = "Id";
+            cbCategoryFiltration.SelectedIndex = -1;
+
+        }
+        private async void btnCreateCategory_Click(object? sender, EventArgs e)
+        {
+            string name = txtCreateCategory.Text.Trim();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Ange ett namn på kategorin!");
+                return;
+            }
+            try
+            {
+                var cat = new Category { Name = name };
+                await _categoryService.AddAsync(cat);
+
+                txtCreateCategory.Clear();
+
+                await ReloadCategoriesAsync();
+                await LoadPoddRegisterAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunde inte skapa kategorin:\r\n" + ex.Message);
+            }
+        }
+
+        private async void btnEditCategory_Click(object? sender, EventArgs e)
+        {
+            if (cbCategoryFiltration.SelectedItem is not Category selectedCategory || string.IsNullOrEmpty(selectedCategory.Id))
+            {
+                MessageBox.Show("Välj en kategori att ändra!");
+                return;
+            }
+
+            string newName = txtChangeName.Text.Trim();
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                MessageBox.Show("Ange ett nytt namn för kategorin!");
+                return;
+            }
+
+            try
+            {
+                selectedCategory.Name = newName;
+
+                bool ok = await _categoryService.UpdateAsync(selectedCategory);
+
+                if (!ok)
+                {
+                    MessageBox.Show("Kunde inte uppdatera kategorin.");
+                    return;
+                }
+
+                txtChangeName.Clear();
+
+                await ReloadCategoriesAsync();
+                await LoadPoddRegisterAsync();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunde inte uppdatera kategorin:\r\n" + ex.Message);
+                return;
+            }
+
+        }
+
+        private async void btnRemoveCat_Click(object? sender, EventArgs e)
+        {
+            if (cbCategoryFiltration.SelectedItem is not Category selectedCategory || string.IsNullOrEmpty(selectedCategory.Id))
+            {
+                MessageBox.Show("Välj en kategori att ta bort!");
+                return;
+            }
+
+            var confirm = MessageBox.Show(
+                $"Är du säker på att du vill ta bort kategorin \"{selectedCategory.Name}\"?",
+                "Bekräfta borttagning",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
+            try
+            {
+                bool ok = await _categoryService.DeleteAsync(selectedCategory.Id);
+                if (!ok)
+                {
+                    MessageBox.Show("Kunde inte ta bort kategorin.");
+                    return;
+                }
+                await ReloadCategoriesAsync();
+                await LoadPoddRegisterAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kunde inte ta bort kategorin:\r\n" + ex.Message);
+                return;
+
+            }
+
+
+        }
+
+        private async void btnEditPod_Click(object? sender, EventArgs e) {
+            if (dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id)) {
+                MessageBox.Show("Välj ett poddflöde i listan först!");
+                return;
+            }
+            string newName = txtEditPod.Text.Trim();
+            if (string.IsNullOrWhiteSpace(newName)) 
+            {
+                MessageBox.Show("Ange ett nytt namn för poddflödet!");
+                return;
+            }
+            try
+            {
+                podd.Name = newName;
+                bool ok = await _poddService.UpdateAsync(podd);
+
+                if (!ok)
+                {
+                    MessageBox.Show("Poddens namn kunde inte uppdateras!");
+                    return;
+                }
+                await LoadPoddRegisterAsync();
+
+                if (dgvPoddNames.DataSource is List<Podd> list)
+                {
+                    var updated = list.FirstOrDefault(p => p.Id == podd.Id);
+                    if (updated != null)
+                    {
+                        int idx = list.IndexOf(updated);
+                        if (idx >= 0 && idx < dgvPoddNames.Rows.Count)
+                        {
+                            dgvPoddNames.ClearSelection();
+                            dgvPoddNames.Rows[idx].Selected = true;
+
+                        }
+                    }
+                }
+                txtEditPod.Clear();
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Fel vid uppdatering av poddens namn!:\r\n" + ex.Message);
             }
         }
 
@@ -434,6 +609,16 @@ namespace PresentationLayer
         }
 
         private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void btnEditPod_Click(object sender, EventArgs e)
+        //{
+
+        //}
+
+        private void btnDelete_Click(object sender, EventArgs e)
         {
 
         }
