@@ -112,6 +112,11 @@ namespace PresentationLayer
             cbCategoryFiltration.ValueMember = "Id";
             cbCategoryFiltration.SelectedIndex = -1;
 
+            cbPoddCatEdit.DataSource = new List<Category>(categories);
+            cbPoddCatEdit.DisplayMember = "Name";
+            cbPoddCatEdit.ValueMember = "Id";
+            cbPoddCatEdit.SelectedIndex = -1;
+
         }
         private async void btnCreateCategory_Click(object? sender, EventArgs e)
         {
@@ -229,9 +234,14 @@ namespace PresentationLayer
                 MessageBox.Show("Ange ett nytt namn för poddflödet!");
                 return;
             }
+
+           
+
             try
             {
                 podd.Name = newName;
+                
+
                 bool ok = await _poddService.UpdateAsync(podd);
 
                 if (!ok)
@@ -344,41 +354,57 @@ namespace PresentationLayer
                 return;
             }
 
-
-            try
+            if (!string.IsNullOrEmpty(podd.CategoryId))
             {
-                var episodes = await _episodeService.GetByPoddIdAsync(podd.Id);
-
-                dgvEpisodeRegister.AutoGenerateColumns = false;
-                dgvEpisodeRegister.Columns.Clear();
-
-                var titleCol = new DataGridViewTextBoxColumn
+                bool found = false;
+                for (int i = 0; i < cbPoddCatEdit.Items.Count; i++)
                 {
-                    DataPropertyName = "Title",
-                    HeaderText = "Avsnitt",
-                    AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                };
 
-                var dateCol = new DataGridViewTextBoxColumn
+                    if (cbPoddCatEdit.Items[i] is Category cat && cat.Id == podd.CategoryId)
+                    {
+                        cbPoddCatEdit.SelectedIndex = i;
+                        found = true;
+                        break;
+                    }
+
+                }
+
+
+                try
                 {
-                    DataPropertyName = "AirDate",
-                    HeaderText = "Publicerad",
-                    DefaultCellStyle = { Format = "yyyy-MM-dd" }
-                };
+                    var episodes = await _episodeService.GetByPoddIdAsync(podd.Id);
 
-                dgvEpisodeRegister.Columns.Add(titleCol);
-                dgvEpisodeRegister.Columns.Add(dateCol);
+                    dgvEpisodeRegister.AutoGenerateColumns = false;
+                    dgvEpisodeRegister.Columns.Clear();
 
-                dgvEpisodeRegister.DataSource = episodes;
+                    var titleCol = new DataGridViewTextBoxColumn
+                    {
+                        DataPropertyName = "Title",
+                        HeaderText = "Avsnitt",
+                        AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                    };
 
-                rtbDescription.Clear();
+                    var dateCol = new DataGridViewTextBoxColumn
+                    {
+                        DataPropertyName = "AirDate",
+                        HeaderText = "Publicerad",
+                        DefaultCellStyle = { Format = "yyyy-MM-dd" }
+                    };
+
+                    dgvEpisodeRegister.Columns.Add(titleCol);
+                    dgvEpisodeRegister.Columns.Add(dateCol);
+
+                    dgvEpisodeRegister.DataSource = episodes;
+
+                    rtbDescription.Clear();
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Kunde inte hämta avsnitt för vald podd:\r\n" + ex.Message);
+                }
+
             }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Kunde inte hämta avsnitt för vald podd:\r\n" + ex.Message);
-            }
-
         }
 
         private void dgvEpisodeRegister_SelectionChanged(object? sender, EventArgs e)
@@ -588,6 +614,43 @@ namespace PresentationLayer
                 btnSave.Enabled = true;
             }
         }
+
+        private async void btnEditCat_Click(object? sender, EventArgs e)
+        {
+            if (dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id))
+            {
+                MessageBox.Show("Välj ett poddflöde i listan först!");
+                return;
+            }
+
+            if (cbPoddCatEdit.SelectedItem is not Category selectedCategory || string.IsNullOrEmpty(selectedCategory.Id))
+            {
+                MessageBox.Show("Välj en kategori att sätta på poddflödet!");
+                return;
+            }
+
+            try
+            {
+                podd.CategoryId = selectedCategory.Id;
+
+                bool ok = await _poddService.UpdateAsync(podd);
+
+                if (!ok)
+                {
+                    MessageBox.Show("Poddens kategori kunde inte uppdateras.");
+                    return;
+                }
+
+                await LoadPoddRegisterAsync();
+
+                MessageBox.Show("Poddens kategori har uppdaterats.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Fel vid uppdatering av poddens kategori:\r\n" + ex.Message);
+            }
+        }
+
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
