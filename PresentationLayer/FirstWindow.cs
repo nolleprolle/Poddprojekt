@@ -51,7 +51,7 @@ namespace PresentationLayer
             dgvPoddNames.SelectionChanged += dgvPoddnames_SelectionChanged;
             dgvEpisodeRegister.SelectionChanged += dgvEpisodeRegister_SelectionChanged;
 
-            btnEditPod.Click += btnEditPod_Click;
+           
 
 
             rtbEpisodeInfo.ReadOnly = true;
@@ -593,10 +593,10 @@ namespace PresentationLayer
 
         }
 
-        private void btnEditPodd_click(object sender, EventArgs e)
-        {
+        //private void btnEditPodd_click(object sender, EventArgs e)
+        //{
 
-        }
+        //}
 
         private void label1_Click(object sender, EventArgs e)
         {
