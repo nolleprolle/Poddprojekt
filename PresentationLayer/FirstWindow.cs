@@ -618,8 +618,46 @@ namespace PresentationLayer
 
         //}
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
+            if(dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id))
+            {
+                MessageBox.Show("Välj ett poddflöde i listan först!");
+                return;
+            }
+
+            var confirm = MessageBox.Show($"Är du säker på att du vill ta bort poddflödet \"{podd.Name}\"?",
+                "Bekräfta borttagning",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if ( confirm!= DialogResult.Yes)
+            {
+                return;
+            }
+
+            try
+            {
+                bool ok = await _poddService.DeleteAsync(podd.Id);
+
+                if (!ok)
+                {
+                    MessageBox.Show("Poddflödet kunde inte tas bort.");
+                    return;
+                }
+
+                await LoadPoddRegisterAsync();
+
+                dgvEpisodeRegister.DataSource = null;
+                rtbDescription.Clear();
+
+                MessageBox.Show("Poddflödet har tagits bort.");
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Fel vid borttagning av poddflödet:\r\n" + ex.Message);
+            }
 
         }
     }
