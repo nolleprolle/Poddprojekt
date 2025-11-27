@@ -11,7 +11,7 @@ namespace BusinessLayer.IServices
     {
         Task<List<Podd>> GetAllAsync();
         Task<Podd?> GetByIdAsync(string id);
-        Task AddAsync(Podd podd);
+        Task<bool> AddAsync(Podd podd);
         Task<bool> UpdateAsync(Podd podd);
         Task<bool> DeleteAsync(string id);
     }

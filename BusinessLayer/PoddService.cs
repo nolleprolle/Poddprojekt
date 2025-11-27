@@ -29,9 +29,15 @@ namespace BusinessLayer
             return _poddRepository.GetByIdAsync(id);
         }
 
-        public Task AddAsync(Podd podd)
+        public async Task <bool> AddAsync(Podd podd)
         {
-            return _poddRepository.AddAsync(podd);
+            var existing = await _poddRepository.GetAllAsync();
+            if (existing.Any(p => p.Url == podd.Url))
+            {
+                return false;
+            }
+            await _poddRepository.AddAsync(podd);
+            return true;
         }
 
         public Task<bool> UpdateAsync(Podd podd)
