@@ -41,6 +41,22 @@ namespace PresentationLayer
         {
             InitializeComponent();
 
+            rtbEpisodeInfo.DetectUrls = true;
+            rtbEpisodeInfo.LinkClicked += (s, e) => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = e.LinkText,
+                UseShellExecute = true
+            });
+
+            rtbDescription.DetectUrls = true;
+            rtbDescription.LinkClicked += (s, e) => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = e.LinkText,
+                UseShellExecute = true
+            });
+
+
+
             _rssClientService = rssClientService;
             _poddService = poddService;
             _episodeService = episodeService;
@@ -61,9 +77,16 @@ namespace PresentationLayer
             rtbEpisodeInfo.WordWrap = true;
             rtbEpisodeInfo.ScrollBars = RichTextBoxScrollBars.Vertical;
 
+            //rtbEpisodeInfo.DetectUrls = true;
+            //rtbDescription.DetectUrls = true;
+
+            //rtbEpisodeInfo.LinkClicked += rtbEpisodeInfo_LinkClicked;
+            //rtbDescription.LinkClicked += rtbDescription_LinkClicked;
+
             rtbDescription.ReadOnly = true;
             rtbDescription.WordWrap = true;
             rtbDescription.ScrollBars = RichTextBoxScrollBars.Vertical;
+           
         }
 
 
@@ -508,6 +531,16 @@ namespace PresentationLayer
 
             rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
             rtbDescription.AppendText(ep.Description ?? "(ingen beskrivning)");
+
+            //Url
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+            rtbDescription.AppendText("\nLänk:\n");
+
+            rtbDescription.SelectionFont = new Font("Segoe UI", 10, FontStyle.Underline);
+            rtbDescription.SelectionColor = Color.Blue;
+            rtbDescription.AppendText(ep.Link ?? "(ingen länk)");
+            rtbDescription.SelectionColor = Color.Black;
+
         }
 
 
@@ -623,6 +656,15 @@ namespace PresentationLayer
 
                 rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Regular);
                 rtbEpisodeInfo.AppendText(ep.Description ?? "(ingen beskrivning)");
+
+                //Url
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Bold);
+                rtbEpisodeInfo.AppendText("\nLänk:\n");
+
+                rtbEpisodeInfo.SelectionFont = new Font("Segoe UI", 10, FontStyle.Underline);
+                rtbEpisodeInfo.SelectionColor = Color.Blue;
+                rtbEpisodeInfo.AppendText(ep.Link ?? "(ingen länk)");
+                rtbEpisodeInfo.SelectionColor = Color.Black;
             }
         }
         private async void btnSave_Click(object? sender, EventArgs e)
