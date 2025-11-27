@@ -106,7 +106,7 @@ namespace PresentationLayer
             var categories = await _categoryService.GetAllAsync();
 
             var defaultCat = categories.FirstOrDefault(c => c.Name == DefaultCategoryName);
-            if (defaultCat == null) 
+            if (defaultCat == null)
             {
                 var newCat = new Category
                 {
@@ -170,7 +170,7 @@ namespace PresentationLayer
                 return;
             }
 
-            if (!string.IsNullOrEmpty(_defaultCategoryId)&& selectedCategory.Id == _defaultCategoryId) 
+            if (!string.IsNullOrEmpty(_defaultCategoryId) && selectedCategory.Id == _defaultCategoryId)
             {
                 MessageBox.Show("Kategorin \"" + DefaultCategoryName + "\" kan inte ändras.");
                 return;
@@ -216,8 +216,8 @@ namespace PresentationLayer
                 MessageBox.Show("Välj en kategori att ta bort!");
                 return;
             }
-            
-            if (!string.IsNullOrEmpty(_defaultCategoryId)&& selectedCategory.Id == _defaultCategoryId) 
+
+            if (!string.IsNullOrEmpty(_defaultCategoryId) && selectedCategory.Id == _defaultCategoryId)
             {
                 MessageBox.Show("Kategorin \"" + DefaultCategoryName + "\" kan inte tas bort.");
                 return;
@@ -241,14 +241,14 @@ namespace PresentationLayer
                     var categories = await _categoryService.GetAllAsync();
 
                     var defaultCat = categories.FirstOrDefault(c => c.Name == DefaultCategoryName);
-                    
-                    if (defaultCat == null) 
+
+                    if (defaultCat == null)
                     {
                         var newCat = new Category
                         {
                             Name = DefaultCategoryName
 
-                            
+
                         };
                         await _categoryService.AddAsync(newCat);
                         categories = await _categoryService.GetAllAsync();
@@ -263,7 +263,7 @@ namespace PresentationLayer
                     .Where(p => p.CategoryId == selectedCategory.Id)
                     .ToList();
 
-                foreach (var podd in affectedPodds) 
+                foreach (var podd in affectedPodds)
                 {
                     podd.CategoryId = _defaultCategoryId;
                     await _poddService.UpdateAsync(podd);
@@ -289,24 +289,26 @@ namespace PresentationLayer
 
         }
 
-        private async void btnEditPod_Click(object? sender, EventArgs e) {
-            if (dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id)) {
+        private async void btnEditPod_Click(object? sender, EventArgs e)
+        {
+            if (dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id))
+            {
                 MessageBox.Show("Välj ett poddflöde i listan först!");
                 return;
             }
             string newName = txtEditPod.Text.Trim();
-            if (string.IsNullOrWhiteSpace(newName)) 
+            if (string.IsNullOrWhiteSpace(newName))
             {
                 MessageBox.Show("Ange ett nytt namn för poddflödet!");
                 return;
             }
 
-           
+
 
             try
             {
                 podd.Name = newName;
-                
+
 
                 bool ok = await _poddService.UpdateAsync(podd);
 
@@ -333,7 +335,8 @@ namespace PresentationLayer
                 }
                 txtEditPod.Clear();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show("Fel vid uppdatering av poddens namn!:\r\n" + ex.Message);
             }
         }
@@ -658,48 +661,48 @@ namespace PresentationLayer
             else
             {
                 categoryId = _defaultCategoryId;
-            
+
             }
-                try
+            try
+            {
+                btnSave.Enabled = false;
+                var podd = new Podd
                 {
-                    btnSave.Enabled = false;
-                    var podd = new Podd
-                    {
-                        Name = poddName,
-                        Url = url,
-                        CategoryId = categoryId
+                    Name = poddName,
+                    Url = url,
+                    CategoryId = categoryId
 
-                    };
+                };
 
-                    bool ok = await _poddService.AddAsync(podd);
-                    if (!ok)
-                    {
-                        MessageBox.Show("Det här flödet är redan sparat!");
-                        return;
-                    }
-
-                    await _poddService.AddAsync(podd);
-                    if (string.IsNullOrEmpty(podd.Id))
-                    {
-                        MessageBox.Show("Kunde inte få tillbaka poddens Id efter sparande.");
-                        return;
-
-                    }
-                    foreach (var ep in _loadedEpisodes)
-                    {
-                        ep.PoddId = podd.Id;
-                        await _episodeService.AddAsync(ep);
-                    }
-                    MessageBox.Show("Du har sparat ner poddflödet.");
-                }
-                catch (Exception ex)
+                bool ok = await _poddService.AddAsync(podd);
+                if (!ok)
                 {
-                    MessageBox.Show("Något gick fel när du skulle spara flödet:\r\n" + ex.Message);
+                    MessageBox.Show("Det här flödet är redan sparat!");
+                    return;
                 }
-                finally
+
+                await _poddService.AddAsync(podd);
+                if (string.IsNullOrEmpty(podd.Id))
                 {
-                    btnSave.Enabled = true;
+                    MessageBox.Show("Kunde inte få tillbaka poddens Id efter sparande.");
+                    return;
+
                 }
+                foreach (var ep in _loadedEpisodes)
+                {
+                    ep.PoddId = podd.Id;
+                    await _episodeService.AddAsync(ep);
+                }
+                MessageBox.Show("Du har sparat ner poddflödet.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Något gick fel när du skulle spara flödet:\r\n" + ex.Message);
+            }
+            finally
+            {
+                btnSave.Enabled = true;
+            }
         }
 
         private async void btnEditCat_Click(object? sender, EventArgs e)
@@ -770,7 +773,7 @@ namespace PresentationLayer
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            if(dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id))
+            if (dgvPoddNames.CurrentRow?.DataBoundItem is not Podd podd || string.IsNullOrEmpty(podd.Id))
             {
                 MessageBox.Show("Välj ett poddflöde i listan först!");
                 return;
@@ -781,7 +784,7 @@ namespace PresentationLayer
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
-            if ( confirm!= DialogResult.Yes)
+            if (confirm != DialogResult.Yes)
             {
                 return;
             }
@@ -822,6 +825,12 @@ namespace PresentationLayer
                 MessageBox.Show("Fel vid borttagning av poddflödet:\r\n" + ex.Message);
             }
 
+        }
+
+        private async void btnShowAll_Click(object sender, EventArgs e)
+        {
+            cbCategoryFiltration.SelectedIndex = -1;
+            await LoadPoddRegisterAsync();
         }
     }
 }
