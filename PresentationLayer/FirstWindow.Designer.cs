@@ -44,6 +44,9 @@
             rtbDescription = new RichTextBox();
             dgvEpisodeRegister = new DataGridView();
             tabPage1 = new TabPage();
+            materialTextBox21 = new MaterialSkin.Controls.MaterialTextBox2();
+            materialComboBox1 = new MaterialSkin.Controls.MaterialComboBox();
+            materialButton1 = new MaterialSkin.Controls.MaterialButton();
             lblSlctCategory = new Label();
             lblSlctName = new Label();
             cbCategory = new ComboBox();
@@ -267,6 +270,9 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(materialTextBox21);
+            tabPage1.Controls.Add(materialComboBox1);
+            tabPage1.Controls.Add(materialButton1);
             tabPage1.Controls.Add(lblSlctCategory);
             tabPage1.Controls.Add(lblSlctName);
             tabPage1.Controls.Add(cbCategory);
@@ -286,6 +292,77 @@
             tabPage1.Text = "Källa";
             tabPage1.UseVisualStyleBackColor = true;
             tabPage1.Click += tabPage1_Click;
+            // 
+            // materialTextBox21
+            // 
+            materialTextBox21.AnimateReadOnly = false;
+            materialTextBox21.BackgroundImageLayout = ImageLayout.None;
+            materialTextBox21.CharacterCasing = CharacterCasing.Normal;
+            materialTextBox21.Depth = 0;
+            materialTextBox21.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialTextBox21.HideSelection = true;
+            materialTextBox21.LeadingIcon = null;
+            materialTextBox21.Location = new Point(978, 679);
+            materialTextBox21.MaxLength = 32767;
+            materialTextBox21.MouseState = MaterialSkin.MouseState.OUT;
+            materialTextBox21.Name = "materialTextBox21";
+            materialTextBox21.PasswordChar = '\0';
+            materialTextBox21.PrefixSuffixText = null;
+            materialTextBox21.ReadOnly = false;
+            materialTextBox21.RightToLeft = RightToLeft.No;
+            materialTextBox21.SelectedText = "";
+            materialTextBox21.SelectionLength = 0;
+            materialTextBox21.SelectionStart = 0;
+            materialTextBox21.ShortcutsEnabled = true;
+            materialTextBox21.Size = new Size(375, 48);
+            materialTextBox21.TabIndex = 22;
+            materialTextBox21.TabStop = false;
+            materialTextBox21.Text = "materialTextBox21";
+            materialTextBox21.TextAlign = HorizontalAlignment.Left;
+            materialTextBox21.TrailingIcon = null;
+            materialTextBox21.UseSystemPasswordChar = false;
+            // 
+            // materialComboBox1
+            // 
+            materialComboBox1.AutoResize = false;
+            materialComboBox1.BackColor = Color.FromArgb(255, 255, 255);
+            materialComboBox1.Depth = 0;
+            materialComboBox1.DrawMode = DrawMode.OwnerDrawVariable;
+            materialComboBox1.DropDownHeight = 174;
+            materialComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            materialComboBox1.DropDownWidth = 121;
+            materialComboBox1.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            materialComboBox1.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            materialComboBox1.FormattingEnabled = true;
+            materialComboBox1.IntegralHeight = false;
+            materialComboBox1.ItemHeight = 43;
+            materialComboBox1.Location = new Point(426, 125);
+            materialComboBox1.MaxDropDownItems = 4;
+            materialComboBox1.MouseState = MaterialSkin.MouseState.OUT;
+            materialComboBox1.Name = "materialComboBox1";
+            materialComboBox1.Size = new Size(182, 49);
+            materialComboBox1.StartIndex = 0;
+            materialComboBox1.TabIndex = 20;
+            // 
+            // materialButton1
+            // 
+            materialButton1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            materialButton1.BackColor = Color.RosyBrown;
+            materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            materialButton1.Depth = 0;
+            materialButton1.HighEmphasis = true;
+            materialButton1.Icon = null;
+            materialButton1.Location = new Point(251, 125);
+            materialButton1.Margin = new Padding(4, 6, 4, 6);
+            materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialButton1.Name = "materialButton1";
+            materialButton1.NoAccentTextColor = Color.Empty;
+            materialButton1.Size = new Size(158, 36);
+            materialButton1.TabIndex = 19;
+            materialButton1.Text = "materialButton1";
+            materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            materialButton1.UseAccentColor = false;
+            materialButton1.UseVisualStyleBackColor = false;
             // 
             // lblSlctCategory
             // 
@@ -397,7 +474,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1814, 916);
+            ClientSize = new Size(1723, 916);
             Controls.Add(tabControl1);
             Margin = new Padding(2);
             Name = "FirstWindow";
@@ -448,6 +525,9 @@
         private Button btnSaveCategory;
         private Button btnEditPod;
         private TextBox txtEditPod;
+        private MaterialSkin.Controls.MaterialButton materialButton1;
+        private MaterialSkin.Controls.MaterialComboBox materialComboBox1;
+        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox21;
         //private Button btnEditPodd;
     }
 }

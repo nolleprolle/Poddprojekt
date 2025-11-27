@@ -9,9 +9,13 @@ using BusinessLayer.IServices;
 using ModelsLayer;
 using System.Linq;
 using System.Threading.Tasks;
+using MaterialSkin.Controls;
+using MaterialSkin;
+
 namespace PresentationLayer
+    
 {
-    public partial class FirstWindow : Form
+    public partial class FirstWindow : MaterialSkin.Controls.MaterialForm
     {
         private readonly IRssClientService _rssClientService;
         private readonly IPoddService _poddService;
@@ -37,6 +41,24 @@ namespace PresentationLayer
             ICategoryService categoryService)
         {
             InitializeComponent();
+            // 1. Skapa en instans av MaterialSkinManager
+            var materialSkinManager = MaterialSkinManager.Instance;
+
+            // 2. Koppla ditt fönster till managern
+            materialSkinManager.AddFormToManage(this);
+
+            // 3. Välj ett övergripande tema (Ljust eller Mörkt)
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+
+            // 4. Sätt färgschemat!
+            // MaterialSkin använder en palett av fördefinierade färger.
+            materialSkinManager.ColorScheme = new ColorScheme(
+                Primary.BlueGrey800, // Primär färg (t.ex. titelrad, huvudknappar)
+                Primary.BlueGrey900, // Mörkare version av primär färg
+                Primary.BlueGrey500, // Ljusare version av primär färg
+                Accent.LightBlue200, // Accentfärg (t.ex. fokusindikatorer)
+                TextShade.WHITE // Textfärg
+            );
 
             _rssClientService = rssClientService;
             _poddService = poddService;
