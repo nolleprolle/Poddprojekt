@@ -70,18 +70,10 @@ namespace PresentationLayer
             dgvPoddNames.SelectionChanged += dgvPoddnames_SelectionChanged;
             dgvEpisodeRegister.SelectionChanged += dgvEpisodeRegister_SelectionChanged;
 
-            btnEditPod.Click += btnEditPod_Click;
-
 
             rtbEpisodeInfo.ReadOnly = true;
             rtbEpisodeInfo.WordWrap = true;
             rtbEpisodeInfo.ScrollBars = RichTextBoxScrollBars.Vertical;
-
-            //rtbEpisodeInfo.DetectUrls = true;
-            //rtbDescription.DetectUrls = true;
-
-            //rtbEpisodeInfo.LinkClicked += rtbEpisodeInfo_LinkClicked;
-            //rtbDescription.LinkClicked += rtbDescription_LinkClicked;
 
             rtbDescription.ReadOnly = true;
             rtbDescription.WordWrap = true;
@@ -808,10 +800,6 @@ namespace PresentationLayer
 
         }
 
-        //private void btnEditPod_Click(object sender, EventArgs e)
-        //{
-
-        //}
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {

@@ -24,6 +24,10 @@
         private void InitializeComponent()
         {
             tabPage2 = new TabPage();
+            lblDeleteCategory = new Label();
+            lblDeletePodd = new Label();
+            lblSwitchCategory = new Label();
+            lblChangeNamePodd = new Label();
             btnEditCat = new Button();
             cbPoddCatEdit = new ComboBox();
             txtEditPod = new TextBox();
@@ -58,10 +62,8 @@
             lblUrlInput = new Label();
             tabControl1 = new TabControl();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            lblChangeNamePodd = new Label();
-            lblSwitchCategory = new Label();
-            lblDeletePodd = new Label();
-            lblDeleteCategory = new Label();
+            lblShowPoddFlow = new Label();
+            lblPoddFlowInfo = new Label();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPoddNames).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvEpisodeRegister).BeginInit();
@@ -106,6 +108,44 @@
             tabPage2.Text = "Poddregister";
             tabPage2.UseVisualStyleBackColor = true;
             tabPage2.Click += tabPage2_Click;
+            // 
+            // lblDeleteCategory
+            // 
+            lblDeleteCategory.AutoSize = true;
+            lblDeleteCategory.Location = new Point(1304, 32);
+            lblDeleteCategory.Name = "lblDeleteCategory";
+            lblDeleteCategory.Size = new Size(137, 25);
+            lblDeleteCategory.TabIndex = 26;
+            lblDeleteCategory.Text = "Radera kategori";
+            // 
+            // lblDeletePodd
+            // 
+            lblDeletePodd.AutoSize = true;
+            lblDeletePodd.Location = new Point(37, 650);
+            lblDeletePodd.Name = "lblDeletePodd";
+            lblDeletePodd.Size = new Size(157, 25);
+            lblDeletePodd.TabIndex = 25;
+            lblDeletePodd.Text = "Radera poddflöde";
+            // 
+            // lblSwitchCategory
+            // 
+            lblSwitchCategory.AutoSize = true;
+            lblSwitchCategory.Location = new Point(571, 654);
+            lblSwitchCategory.Name = "lblSwitchCategory";
+            lblSwitchCategory.Size = new Size(130, 25);
+            lblSwitchCategory.TabIndex = 24;
+            lblSwitchCategory.Text = "Ändra kategori";
+            lblSwitchCategory.Click += lblSwitchCategory_Click;
+            // 
+            // lblChangeNamePodd
+            // 
+            lblChangeNamePodd.AutoSize = true;
+            lblChangeNamePodd.Location = new Point(227, 650);
+            lblChangeNamePodd.Name = "lblChangeNamePodd";
+            lblChangeNamePodd.Size = new Size(174, 25);
+            lblChangeNamePodd.TabIndex = 23;
+            lblChangeNamePodd.Text = "Ändra visningsnamn";
+            lblChangeNamePodd.Click += label1_Click_2;
             // 
             // btnEditCat
             // 
@@ -221,9 +261,9 @@
             lblDescription.AutoSize = true;
             lblDescription.Location = new Point(871, 123);
             lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(102, 25);
+            lblDescription.Size = new Size(106, 25);
             lblDescription.TabIndex = 9;
-            lblDescription.Text = "Beskrivning";
+            lblDescription.Text = "Information";
             lblDescription.Click += label3_Click;
             // 
             // lblCategory
@@ -301,6 +341,8 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(lblPoddFlowInfo);
+            tabPage1.Controls.Add(lblShowPoddFlow);
             tabPage1.Controls.Add(lblSlctCategory);
             tabPage1.Controls.Add(lblSlctName);
             tabPage1.Controls.Add(cbCategory);
@@ -324,7 +366,7 @@
             // lblSlctCategory
             // 
             lblSlctCategory.AutoSize = true;
-            lblSlctCategory.Location = new Point(109, 687);
+            lblSlctCategory.Location = new Point(109, 696);
             lblSlctCategory.Name = "lblSlctCategory";
             lblSlctCategory.Size = new Size(114, 25);
             lblSlctCategory.TabIndex = 18;
@@ -333,7 +375,7 @@
             // lblSlctName
             // 
             lblSlctName.AutoSize = true;
-            lblSlctName.Location = new Point(50, 640);
+            lblSlctName.Location = new Point(43, 648);
             lblSlctName.Name = "lblSlctName";
             lblSlctName.Size = new Size(185, 25);
             lblSlctName.TabIndex = 17;
@@ -342,7 +384,7 @@
             // cbCategory
             // 
             cbCategory.FormattingEnabled = true;
-            cbCategory.Location = new Point(229, 683);
+            cbCategory.Location = new Point(229, 688);
             cbCategory.Name = "cbCategory";
             cbCategory.Size = new Size(200, 33);
             cbCategory.TabIndex = 16;
@@ -350,7 +392,7 @@
             // txtPoddName
             // 
             txtPoddName.AccessibleName = "Vänligen ";
-            txtPoddName.Location = new Point(229, 640);
+            txtPoddName.Location = new Point(229, 645);
             txtPoddName.Margin = new Padding(1, 2, 1, 2);
             txtPoddName.Name = "txtPoddName";
             txtPoddName.Size = new Size(200, 31);
@@ -367,7 +409,7 @@
             // 
             // txtUrlInput
             // 
-            txtUrlInput.Location = new Point(50, 88);
+            txtUrlInput.Location = new Point(50, 65);
             txtUrlInput.Margin = new Padding(1, 2, 1, 2);
             txtUrlInput.Name = "txtUrlInput";
             txtUrlInput.Size = new Size(233, 31);
@@ -375,7 +417,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(445, 685);
+            btnSave.Location = new Point(439, 689);
             btnSave.Margin = new Padding(1, 2, 1, 2);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(120, 33);
@@ -396,7 +438,7 @@
             // 
             // btnGetInfo
             // 
-            btnGetInfo.Location = new Point(51, 125);
+            btnGetInfo.Location = new Point(51, 103);
             btnGetInfo.Margin = new Padding(1, 2, 1, 2);
             btnGetInfo.Name = "btnGetInfo";
             btnGetInfo.Size = new Size(111, 33);
@@ -408,7 +450,7 @@
             // lblUrlInput
             // 
             lblUrlInput.AutoSize = true;
-            lblUrlInput.Location = new Point(50, 60);
+            lblUrlInput.Location = new Point(51, 36);
             lblUrlInput.Margin = new Padding(1, 0, 1, 0);
             lblUrlInput.Name = "lblUrlInput";
             lblUrlInput.Size = new Size(233, 25);
@@ -427,49 +469,29 @@
             tabControl1.Size = new Size(1711, 795);
             tabControl1.TabIndex = 9;
             // 
-            // lblChangeNamePodd
+            // lblShowPoddFlow
             // 
-            lblChangeNamePodd.AutoSize = true;
-            lblChangeNamePodd.Location = new Point(227, 650);
-            lblChangeNamePodd.Name = "lblChangeNamePodd";
-            lblChangeNamePodd.Size = new Size(174, 25);
-            lblChangeNamePodd.TabIndex = 23;
-            lblChangeNamePodd.Text = "Ändra visningsnamn";
-            lblChangeNamePodd.Click += label1_Click_2;
+            lblShowPoddFlow.AutoSize = true;
+            lblShowPoddFlow.Location = new Point(50, 160);
+            lblShowPoddFlow.Name = "lblShowPoddFlow";
+            lblShowPoddFlow.Size = new Size(134, 25);
+            lblShowPoddFlow.TabIndex = 19;
+            lblShowPoddFlow.Text = "Visa poddflöde";
             // 
-            // lblSwitchCategory
+            // lblPoddFlowInfo
             // 
-            lblSwitchCategory.AutoSize = true;
-            lblSwitchCategory.Location = new Point(571, 654);
-            lblSwitchCategory.Name = "lblSwitchCategory";
-            lblSwitchCategory.Size = new Size(130, 25);
-            lblSwitchCategory.TabIndex = 24;
-            lblSwitchCategory.Text = "Ändra kategori";
-            lblSwitchCategory.Click += lblSwitchCategory_Click;
-            // 
-            // lblDeletePodd
-            // 
-            lblDeletePodd.AutoSize = true;
-            lblDeletePodd.Location = new Point(37, 650);
-            lblDeletePodd.Name = "lblDeletePodd";
-            lblDeletePodd.Size = new Size(157, 25);
-            lblDeletePodd.TabIndex = 25;
-            lblDeletePodd.Text = "Radera poddflöde";
-            // 
-            // lblDeleteCategory
-            // 
-            lblDeleteCategory.AutoSize = true;
-            lblDeleteCategory.Location = new Point(1304, 32);
-            lblDeleteCategory.Name = "lblDeleteCategory";
-            lblDeleteCategory.Size = new Size(137, 25);
-            lblDeleteCategory.TabIndex = 26;
-            lblDeleteCategory.Text = "Radera kategori";
+            lblPoddFlowInfo.AutoSize = true;
+            lblPoddFlowInfo.Location = new Point(624, 161);
+            lblPoddFlowInfo.Name = "lblPoddFlowInfo";
+            lblPoddFlowInfo.Size = new Size(106, 25);
+            lblPoddFlowInfo.TabIndex = 20;
+            lblPoddFlowInfo.Text = "Information";
             // 
             // FirstWindow
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1759, 821);
+            ClientSize = new Size(1744, 825);
             Controls.Add(tabControl1);
             Margin = new Padding(1, 2, 1, 2);
             Name = "FirstWindow";
@@ -527,6 +549,8 @@
         private Label lblSwitchCategory;
         private Label lblDeletePodd;
         private Label lblDeleteCategory;
+        private Label lblShowPoddFlow;
+        private Label lblPoddFlowInfo;
         //private Button btnEditPodd;
     }
 }
