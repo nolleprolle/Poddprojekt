@@ -14,8 +14,6 @@ namespace BusinessLayer.IServices
         Task AddAsync(Episode episode);
         Task<bool> UpdateAsync(Episode episode);
         Task<bool> DeleteAsync(string id);
-
-        // Extra hjälpmetod: hämta alla episoder för en viss podd
         Task<List<Episode>> GetByPoddIdAsync(string poddId);
     }
 }

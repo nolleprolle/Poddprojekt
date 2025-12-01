@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace DataLayer.IRepositories
 {
-    /// Generiskt repository-interface för grundläggande CRUD-operationer.
-    /// Används av alla repositories (Podd, Episode, Category).
     public interface IRepository<T> where T : class
     {
         // CREATE

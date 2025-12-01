@@ -13,7 +13,6 @@ namespace BusinessLayer
     {
         private readonly IRepository<Podd> _poddRepository;
 
-        /// Konstruktorn tar emot poddRepository som hanterar Podd-objekt
         public PoddService(IRepository<Podd> poddRepository)
         {
             _poddRepository = poddRepository;

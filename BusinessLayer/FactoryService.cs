@@ -10,7 +10,7 @@ namespace BusinessLayer
     {
         private static readonly MongoDBService _mongoService = new MongoDBService();
 
-        // RSS-tjänst (läser in avsnitt från internet, inte DB)
+        // RSS-tjänst 
         public static IRssClientService CreateRssService()
         {
             var http = new HttpClient();

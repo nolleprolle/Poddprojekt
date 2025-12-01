@@ -11,14 +11,12 @@ namespace BusinessLayer
     {
         private readonly RssPoddClient _rssPoddClient;
 
-        // Standardkonstruktor – skapar själv HttpClient och RssPoddClient
         public RssClientService()
         {
             var httpClient = new HttpClient();
             _rssPoddClient = new RssPoddClient(httpClient);
         }
 
-        // Extra konstruktor om man vill testa / mocka
         public RssClientService(RssPoddClient rssPoddClient)
         {
             _rssPoddClient = rssPoddClient;
