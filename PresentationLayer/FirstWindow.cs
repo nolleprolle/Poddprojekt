@@ -86,7 +86,7 @@ namespace PresentationLayer
             rtbDescription.ReadOnly = true;
             rtbDescription.WordWrap = true;
             rtbDescription.ScrollBars = RichTextBoxScrollBars.Vertical;
-           
+
         }
 
 
@@ -873,6 +873,21 @@ namespace PresentationLayer
         {
             cbCategoryFiltration.SelectedIndex = -1;
             await LoadPoddRegisterAsync();
+        }
+
+        private void label1_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSwitchCategory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
