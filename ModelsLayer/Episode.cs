@@ -20,7 +20,6 @@ namespace ModelsLayer
         public DateTime? AirDate { get; set; }
         public string? Link { get; set; }
 
-        //Pekar på podcast
         [BsonRepresentation(BsonType.ObjectId)]
         public string? PoddId { get; set; }
     }
