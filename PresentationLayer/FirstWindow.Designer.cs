@@ -119,7 +119,7 @@
             // lblDeleteCategory
             // 
             lblDeleteCategory.AutoSize = true;
-            lblDeleteCategory.Location = new Point(1162, 34);
+            lblDeleteCategory.Location = new Point(1162, 32);
             lblDeleteCategory.Name = "lblDeleteCategory";
             lblDeleteCategory.Size = new Size(157, 25);
             lblDeleteCategory.TabIndex = 26;
@@ -128,7 +128,7 @@
             // lblDeletePodd
             // 
             lblDeletePodd.AutoSize = true;
-            lblDeletePodd.Location = new Point(37, 655);
+            lblDeletePodd.Location = new Point(773, 660);
             lblDeletePodd.Name = "lblDeletePodd";
             lblDeletePodd.Size = new Size(178, 25);
             lblDeletePodd.TabIndex = 25;
@@ -138,7 +138,7 @@
             // lblSwitchCategory
             // 
             lblSwitchCategory.AutoSize = true;
-            lblSwitchCategory.Location = new Point(571, 656);
+            lblSwitchCategory.Location = new Point(393, 659);
             lblSwitchCategory.Name = "lblSwitchCategory";
             lblSwitchCategory.Size = new Size(149, 25);
             lblSwitchCategory.TabIndex = 24;
@@ -148,7 +148,7 @@
             // lblChangeNamePodd
             // 
             lblChangeNamePodd.AutoSize = true;
-            lblChangeNamePodd.Location = new Point(227, 654);
+            lblChangeNamePodd.Location = new Point(37, 658);
             lblChangeNamePodd.Name = "lblChangeNamePodd";
             lblChangeNamePodd.Size = new Size(197, 25);
             lblChangeNamePodd.TabIndex = 23;
@@ -158,7 +158,7 @@
             // btnEditCat
             // 
             btnEditCat.BackColor = Color.WhiteSmoke;
-            btnEditCat.Location = new Point(749, 687);
+            btnEditCat.Location = new Point(574, 689);
             btnEditCat.Margin = new Padding(4, 5, 4, 5);
             btnEditCat.Name = "btnEditCat";
             btnEditCat.Size = new Size(140, 33);
@@ -171,7 +171,7 @@
             // 
             cbPoddCatEdit.Font = new Font("Segoe UI Symbol", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cbPoddCatEdit.FormattingEnabled = true;
-            cbPoddCatEdit.Location = new Point(568, 686);
+            cbPoddCatEdit.Location = new Point(393, 688);
             cbPoddCatEdit.Margin = new Padding(4, 5, 4, 5);
             cbPoddCatEdit.Name = "cbPoddCatEdit";
             cbPoddCatEdit.Size = new Size(171, 33);
@@ -180,7 +180,7 @@
             // txtEditPod
             // 
             txtEditPod.Font = new Font("Segoe UI Symbol", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtEditPod.Location = new Point(227, 685);
+            txtEditPod.Location = new Point(37, 689);
             txtEditPod.Name = "txtEditPod";
             txtEditPod.Size = new Size(150, 31);
             txtEditPod.TabIndex = 20;
@@ -188,7 +188,7 @@
             // btnEditPod
             // 
             btnEditPod.BackColor = Color.WhiteSmoke;
-            btnEditPod.Location = new Point(386, 685);
+            btnEditPod.Location = new Point(196, 688);
             btnEditPod.Name = "btnEditPod";
             btnEditPod.Size = new Size(140, 33);
             btnEditPod.TabIndex = 19;
@@ -221,7 +221,7 @@
             // lblChangeName
             // 
             lblChangeName.AutoSize = true;
-            lblChangeName.Location = new Point(451, 34);
+            lblChangeName.Location = new Point(451, 32);
             lblChangeName.Name = "lblChangeName";
             lblChangeName.Size = new Size(198, 25);
             lblChangeName.TabIndex = 16;
@@ -231,7 +231,7 @@
             // lblCreateCategory
             // 
             lblCreateCategory.AutoSize = true;
-            lblCreateCategory.Location = new Point(813, 34);
+            lblCreateCategory.Location = new Point(813, 32);
             lblCreateCategory.Name = "lblCreateCategory";
             lblCreateCategory.Size = new Size(150, 25);
             lblCreateCategory.TabIndex = 15;
@@ -308,7 +308,7 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.WhiteSmoke;
-            btnDelete.Location = new Point(37, 685);
+            btnDelete.Location = new Point(776, 689);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(140, 33);
             btnDelete.TabIndex = 6;
@@ -545,7 +545,7 @@
             // btnGetInfo
             // 
             btnGetInfo.BackColor = Color.WhiteSmoke;
-            btnGetInfo.Location = new Point(45, 103);
+            btnGetInfo.Location = new Point(45, 105);
             btnGetInfo.Margin = new Padding(1, 2, 1, 2);
             btnGetInfo.Name = "btnGetInfo";
             btnGetInfo.Size = new Size(140, 33);
