@@ -877,5 +877,25 @@ namespace PresentationLayer
         {
 
         }
+
+        private void lblUrlInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FirstWindow_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDeletePodd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblChangeName_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
